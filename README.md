@@ -41,7 +41,7 @@ And finally, create a pull request so your ProGrad Mentor (PM) can review your w
   - Define the respective controllers to process the data.
   - Define proper package structure in the application.
   - Kindly go through the application package structure for reference.
-  ![Package Structure]()
+  ![Package Structure](https://i1.faceprep.in/ProGrad/jsp-day-3-project.png)
 
 ## Bonus
   - Report generation(Excel, Csv or Pdf).
