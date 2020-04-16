@@ -9,7 +9,7 @@ package services;
 
 import java.util.List;
 
-import beans.Reimbursement;
+import model.Reimbursement;
 import dao.ReimbursementDAO;
 import dao.ReimbursementDaoJDBC;
 

@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.User;
-import utility.ConnectionUtil;
+import model.User;
+import utility.ConnectionManager;
+
 
 
 
 public class UserDaoJDBC implements UserDAO{
 
-	private ConnectionUtil conUtil = ConnectionUtil.getConnectionUtil();
 	
 	// grabs a user from a result set returned by running a SQL statement
 	private User getUserFromResultSet(ResultSet rs) throws SQLException{
@@ -27,15 +27,16 @@ public class UserDaoJDBC implements UserDAO{
 		String email = rs.getString("user_email");
 		int roleId = rs.getInt("user_role_id");
 	
-		return new User(id,username,password,fname,lname,email,roleId);
+		return new User();
 	}
 	
 	// returns a user from the database where id is defined
 	@Override
 	public User getUserbyId(int id) {
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_users WHERE ers_users_id = ?");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users WHERE ers_users_id = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			
@@ -43,7 +44,7 @@ public class UserDaoJDBC implements UserDAO{
 				return getUserFromResultSet(rs);
 			}	
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -55,8 +56,9 @@ public class UserDaoJDBC implements UserDAO{
 		
 		List<User> users = new ArrayList<>();
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_users");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users");
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
@@ -68,10 +70,10 @@ public class UserDaoJDBC implements UserDAO{
 				String email = rs.getString("user_email");
 				int roleId = rs.getInt("user_role_id");
 				
-				users.add(new User(id,username,password,fname,lname,email,roleId));
+				users.add(new User());
 			}
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return users;
@@ -81,8 +83,9 @@ public class UserDaoJDBC implements UserDAO{
 	@Override
 	public int addUser(User u) {
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO ers_users (ers_username,ers_password,user_first_name,user_last_name,user_email,user_role_id)"
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("INSERT INTO ers_users (ers_username,ers_password,user_first_name,user_last_name,user_email,user_role_id)"
 					+ "VALUES (?,?,?,?,?,?)",new String[] {"ers_users_id"});
 			
 			ps.setString(1, u.getUsername());
@@ -101,7 +104,7 @@ public class UserDaoJDBC implements UserDAO{
 				return keys.getInt(1);
 			}
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return 0;
@@ -111,9 +114,9 @@ public class UserDaoJDBC implements UserDAO{
 	@Override
 	public User findByUsernameAndPassword(String username, String password) {
 
-		try(Connection conn = ConnectionUtil.getConnection()){
-			
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_users WHERE ers_username = ? AND ers_password = ?");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users WHERE ers_username = ? AND ers_password = ?");
 			ps.setString(1, username);
 			ps.setString(2, password);
 			
@@ -133,11 +136,14 @@ public class UserDaoJDBC implements UserDAO{
 				return u;
 			}
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
+	
+
+	
 	
 }

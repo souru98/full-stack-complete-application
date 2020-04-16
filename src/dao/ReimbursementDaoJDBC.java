@@ -10,8 +10,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import beans.Reimbursement;
-import utility.ConnectionUtil;
+import model.Reimbursement;
+import utility.ConnectionManager;
+
 
 
 
@@ -39,8 +40,9 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 		
 		List<Reimbursement> userReimbursements = new ArrayList<>();
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_id");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_id");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			
@@ -58,7 +60,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				userReimbursements.add(new Reimbursement(rId, amount, submitted, resolved, description, authorId, resolverId, status, type));
 			}	
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return userReimbursements;
@@ -68,8 +70,9 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 	@Override
 	public Reimbursement getReimbursementByID(int id) {
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_id = ?");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursement WHERE reimb_id = ?");
 			ps.setInt(1, id);
 			ResultSet rs = ps.executeQuery();
 			
@@ -77,7 +80,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				return getReimbursementFromResultSet(rs);
 			}	
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -89,8 +92,9 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 		
 		List<Reimbursement> reimbursements = new ArrayList<>();
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("SELECT * FROM ers_reimbursement ORDER BY reimb_id");
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_reimbursement ORDER BY reimb_id");
 			ResultSet rs = ps.executeQuery();
 						
 			while(rs.next()) {
@@ -107,7 +111,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				reimbursements.add(new Reimbursement(id, amount, submitted, resolved, description, authorId, resolverId, status, type));
 			}
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return reimbursements;
@@ -117,8 +121,9 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 	@Override
 	public int addReimbursement(Reimbursement rb) {
 		
-		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement("INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_resolved, reimb_description,reimb_author,reimb_status_id,reimb_type_id)"
+		try {
+				Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("INSERT INTO ers_reimbursement (reimb_amount, reimb_submitted, reimb_resolved, reimb_description,reimb_author,reimb_status_id,reimb_type_id)"
 					+ "VALUES (?,?,?,?,?,?,?)", new String[] {"reimb_id"});
 			ps.setDouble(1, rb.getAmount());
 			ps.setTimestamp(2, rb.getSubmitted());
@@ -137,7 +142,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				return keys.getInt(1);
 			}
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return 0;
@@ -147,8 +152,9 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 	@Override
 	public boolean approveDeny(String choice, int id, int resolverId) {
 		
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			PreparedStatement ps = conn.prepareStatement("UPDATE ers_reimbursement SET reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? WHERE reimb_id = ? AND reimb_author != " + resolverId);
+		try{
+			Connection con = ConnectionManager.getConnection();
+			PreparedStatement ps = con.prepareStatement("UPDATE ers_reimbursement SET reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? WHERE reimb_id = ? AND reimb_author != " + resolverId);
 			ps.setInt(4, id);
 			
 			if(choice.equals("approve")) {
@@ -167,7 +173,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 			ps.executeQuery();
 			return true;
 		} 
-		catch (SQLException e) {
+		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return false;

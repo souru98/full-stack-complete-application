@@ -7,9 +7,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.catalina.servlets.DefaultServlet;
-
 import controllers.ReimbursementController;
 import controllers.UserController;
 
@@ -17,7 +15,7 @@ import controllers.UserController;
 
 public class DispatcherServlet extends DefaultServlet{
 
-	private static final long serialVersionUID = -4309074987629377240L;
+	private static final long serialVersionUID = 1L;
 
 	private ReimbursementController rc = new ReimbursementController();
 	private UserController uc = new UserController();

@@ -4,7 +4,7 @@ package dao;
 
 import java.util.List;
 
-import beans.Reimbursement;
+import model.Reimbursement;
 
 
 

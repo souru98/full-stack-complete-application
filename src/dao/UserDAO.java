@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-import beans.User;
+import model.User;
 
 
 

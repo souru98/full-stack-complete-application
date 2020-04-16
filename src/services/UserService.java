@@ -1,6 +1,6 @@
 package services;
 
-import beans.User;
+import model.User;
 import dao.UserDAO;
 import dao.UserDaoJDBC;
 
