@@ -1,19 +1,10 @@
 package services;
 
-/*
- * Class: ReimbursementService
- * Author: Kyle Settles
- * Description: This service is used as a buffer between the database and the controllers
- * 		performs most of the business logic needed for the program
- */
-
 import java.util.List;
 
 import model.Reimbursement;
 import dao.ReimbursementDAO;
 import dao.ReimbursementDaoJDBC;
-
-
 
 public class ReimbursementService {
 

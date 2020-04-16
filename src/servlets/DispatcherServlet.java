@@ -1,7 +1,5 @@
 package servlets;
 
-
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,8 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.catalina.servlets.DefaultServlet;
 import controllers.ReimbursementController;
 import controllers.UserController;
-
-
 
 public class DispatcherServlet extends DefaultServlet{
 
