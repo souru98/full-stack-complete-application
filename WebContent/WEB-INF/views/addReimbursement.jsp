@@ -10,7 +10,7 @@
 <body>
 <div class="reimbursement-container">
         <h1 class="title">Expense Reimbursement System</h1>
-            <form>
+            <form action="${pageContext.request.contextPath}/Reimbursement" method="post">
                 <div class="form-group row">
                 <div>
                     <label for="inputFirstName" class="col-sm-2 col-form-label">Amount:</label>

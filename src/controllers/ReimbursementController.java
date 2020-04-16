@@ -51,29 +51,92 @@ public class ReimbursementController {
 		String json;
 		List<Reimbursement> userReimb = rs.getByUser((Integer)request.getSession().getAttribute("user"));
 				
-		
+		try {
+			ObjectMapper om = new ObjectMapper();
+			ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
+			json = ow.writeValueAsString(userReimb);
+			PrintWriter writer = response.getWriter();
+			writer.write(json);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	// method used to display all reimbursements on the webpage
 	// converts the reimbursements to json and sends back to server
 	private void displayAll(HttpServletRequest request, HttpServletResponse response) {
-				List<Reimbursement> allReimb = rs.getAllReimb();
+		String json;
+		List<Reimbursement> allReimb = rs.getAllReimb();
 		
-		
+		try {
+			ObjectMapper om = new ObjectMapper();
+			ObjectWriter ow = om.writer().withDefaultPrettyPrinter();
+			json = ow.writeValueAsString(allReimb);
+			PrintWriter writer = response.getWriter();
+			writer.write(json);
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// used to add a reimbursement takes info from client and creates a reimbursement 
 	// to be sent to the database
 	private void add(HttpServletRequest request, HttpServletResponse response) {
-		
+		String json;
+		try {
+			json = request.getReader().lines().reduce((acc, curr) -> acc + curr).get();
+			ObjectMapper om = new ObjectMapper();
+			Reimbursement r = om.readValue(json, Reimbursement.class);
+			r.setAmount(r.getAmount());
+			r.setAuthorId((Integer)request.getSession().getAttribute("user"));
+			int newReimbursement = rs.add(r);
+			
+			r.setId(newReimbursement);
+			
+			if(newReimbursement == 0) {
+				response.setStatus(401);
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void approve(HttpServletRequest request, HttpServletResponse response) {
-		
+		String json;
+		try {
+			json = request.getReader().lines().reduce((acc, curr) -> acc + curr).get();			
+			ObjectMapper om = new ObjectMapper();
+			Reimbursement r = om.readValue(json, Reimbursement.class);
+			System.out.println("attempting to approve reimbursement");
+			boolean success = rs.statusChange(r, "approve", (Integer)request.getSession().getAttribute("user"));
+			
+			if(success == false) {
+				response.setStatus(401);
+				response.setHeader("error", "manager");
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private void deny(HttpServletRequest request, HttpServletResponse response) {
 		String json;
-		
+		try {
+			json = request.getReader().lines().reduce((acc, curr) -> acc + curr).get();
+			ObjectMapper om = new ObjectMapper();
+			Reimbursement r = om.readValue(json, Reimbursement.class);
+			boolean success = rs.statusChange(r, "deny", (Integer)request.getSession().getAttribute("user"));
+			
+			if(success == false) {
+				response.setStatus(401);
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

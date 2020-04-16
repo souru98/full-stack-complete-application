@@ -18,5 +18,5 @@ public interface UserDAO {
 	int addUser(User u);
 
 	// finds a user by username and password for logging into the system
-	User findByUsernameAndPassword(String username, String password);
+	boolean findByUsernameAndPassword(String username, String password);
 }

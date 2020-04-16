@@ -9,7 +9,7 @@ public class UserService {
 	private UserDAO ud = new UserDaoJDBC();
 	
 	// logs a user into the system
-	public User login(User u) {
+	public boolean login(User u) {
 		return ud.findByUsernameAndPassword(u.getUsername(), u.getPassword());
 	}
 	

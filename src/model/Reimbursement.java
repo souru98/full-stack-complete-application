@@ -13,6 +13,8 @@ public class Reimbursement {
 	private int resolverId;
 	private int status;
 	private int type;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -71,19 +73,18 @@ public class Reimbursement {
 	
 	
 	
-	public Reimbursement(int id, double amount, Timestamp submitted, Timestamp resolved, String description,
-			int authorId, int resolverId, int status, int type) {
-		super();
-		this.id = id;
-		this.amount = amount;
-		this.submitted = submitted;
-		this.resolved = resolved;
-		this.description = description;
-		this.authorId = authorId;
-		this.resolverId = resolverId;
-		this.status = status;
-		this.type = type;
-	}
+//	public Reimbursement() {
+//		super();
+//		this.id = id;
+//		this.amount = amount;
+//		this.submitted = submitted;
+//		this.resolved = resolved;
+//		this.description = description;
+//		this.authorId = authorId;
+//		this.resolverId = resolverId;
+//		this.status = status;
+//		this.type = type;
+//	}
 	
 	
 	

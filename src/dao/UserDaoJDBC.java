@@ -111,36 +111,46 @@ public class UserDaoJDBC implements UserDAO{
 	}
 
 	// finds a user by username and password and returns that user from the database
-	@Override
-	public User findByUsernameAndPassword(String username, String password) {
+	
 
+	public boolean findByUsernameAndPassword(String username, String password) {
+		// TODO Auto-generated method stub
 		try{
 			Connection con = ConnectionManager.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM ers_users WHERE ers_username = ? AND ers_password = ?");
-			ps.setString(1, username);
-			ps.setString(2, password);
-			
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM  ers_users");
+			System.out.println(ps);
 			ResultSet rs = ps.executeQuery();
+			System.out.println(rs);
 			
-			if(rs.next()) {
-				User u = new User();
-				u.setUsername(username);
-				u.setPassword(password);
-				u.setEmail(rs.getString("user_email"));
-				u.setFirstName(rs.getString("user_first_name"));
-				u.setLastName(rs.getString("user_last_name"));
-				u.setId(rs.getInt("ers_users_id"));
-				u.setRole(rs.getInt("user_role_id"));
-				
-				System.out.println(u);
-				return u;
+		 while(rs.next()) {
+			 
+			 if(username.equals(rs.getString("ers_username")))
+			 {
+				 if(password.equals(rs.getString("ers_password")))
+				 {
+					 return true;
+					 
+				 }
+				 else
+				 {
+					 System.out.println("check your Password");
+				 }
+			 }
+			 else {
+				 System.out.println("check your username");
+			 }
+			
+				return false;
 			}
 		} 
 		catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
+
+
+	
 
 	
 

@@ -32,7 +32,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 		int statusId = rs.getInt("reimb_status_id");
 		int typeId = rs.getInt("reimb_type_id");
 		
-		return new Reimbursement(id, amount, submitted, resolved, description, author, resolver, statusId, typeId);
+		return new Reimbursement();
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				int status = rs.getInt("reimb_status_id");
 				int type = rs.getInt("reimb_type_id");
 				
-				userReimbursements.add(new Reimbursement(rId, amount, submitted, resolved, description, authorId, resolverId, status, type));
+				userReimbursements.add(new Reimbursement());
 			}	
 		} 
 		catch (SQLException | ClassNotFoundException e) {
@@ -108,7 +108,7 @@ public class ReimbursementDaoJDBC implements ReimbursementDAO{
 				int status = rs.getInt("reimb_status_id");
 				int type = rs.getInt("reimb_type_id");
 				
-				reimbursements.add(new Reimbursement(id, amount, submitted, resolved, description, authorId, resolverId, status, type));
+				reimbursements.add(new Reimbursement());
 			}
 		} 
 		catch (SQLException | ClassNotFoundException e) {
