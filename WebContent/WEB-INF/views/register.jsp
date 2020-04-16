@@ -1,12 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="./CSS/registerCSS.css">
-        <title>Register</title>
-    </head>
-    
-    <body>
-        <div class="register-container">
+<head>
+<meta charset="ISO-8859-1">
+<title>Register</title>
+<link rel="stylesheet" href="./CSS/registerCSS.css">
+</head>
+<body>
+<div class="register-container">
         <h1 class="title">Expense Reimbursement System</h1>
             <form>
                 <div class="form-group row">
@@ -54,7 +56,9 @@
               </div>
             </form>
         </div>
-        
-        
-        </body>
+</body>
 </html>
+
+
+
+

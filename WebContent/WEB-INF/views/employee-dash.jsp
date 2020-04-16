@@ -1,11 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>ERS Dash</title>
-
-    <link rel="stylesheet" href="./CSS/dash.css">
+<meta charset="ISO-8859-1">
+<title>ERS Dash</title>
+ <link rel="stylesheet" href="./CSS/dash.css">
 </head>
+
 
 <body onload="displayByUser()">
     <div class="title-dash-container">
@@ -107,7 +109,5 @@
         </div>
     </div>
 
-   
 </body>
-
 </html>

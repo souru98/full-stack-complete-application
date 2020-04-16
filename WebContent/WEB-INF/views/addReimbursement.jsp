@@ -1,13 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        
-        <link rel="stylesheet" href="./CSS/reimbursementCSS.css">
-        <title>Reimbursement</title>
-    </head>
-    
-    <body>
-        <div class="reimbursement-container">
+<head>
+<meta charset="ISO-8859-1">
+<title>Reimbursement</title>
+<link rel="stylesheet" href="./CSS/reimbursementCSS.css">
+</head>
+<body>
+<div class="reimbursement-container">
         <h1 class="title">Expense Reimbursement System</h1>
             <form>
                 <div class="form-group row">
@@ -45,7 +46,5 @@
               </div>
             </form>
         </div>
-        
-        
-        </body>
+</body>
 </html>

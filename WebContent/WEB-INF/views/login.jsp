@@ -1,14 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Login</title>
-    
-    <link rel="stylesheet" href="./CSS/dash.css">
+<meta charset="ISO-8859-1">
+<title>Login</title>
+<link rel="stylesheet" href="./CSS/dash.css">
 </head>
-
 <body>
-    <div class="title-container">
+<div class="title-container">
         <h1 class="title">Expense Reimbursement System</h1>
         <div class="login-container">
             <form onsubmit="event.preventDefault(); login()">
@@ -27,5 +27,9 @@
 
 
     </body>
-
+</body>
 </html>
+
+
+
+
